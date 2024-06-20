@@ -4,7 +4,7 @@ Solidity smart contract that demonstrates assert, revert, and require functions.
 #Prerequisites
 Solidity ^0.8.25
 
-##Details
+#Details
 The contract provides the following functions:
 
 #AssertTesting(uint num)
