@@ -1,30 +1,27 @@
-//SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-pragma solidity ^0.8.25;
+contract AccountBalances{
+    // mapping variable here
+    mapping(address => uint) public account;
 
-contract ErrorHandeling {
-  
-    uint y=10;
-
-    function assertTesting(uint num) public pure{
-        assert(num!=0);
+    function add(uint _val) public payable {
+        require(_val > 0, "value of amount must be greater than zero");
+        account[msg.sender] += _val;
     }
 
-    function multiplication(uint x) public view returns (uint){
-        require(x>0,"the value should be greater than zero as multiplying by zero gives zero itself.");
-        return x*y;
-
+    // Function to withdraw funds
+    function withdraw(uint _val) public {
+        require(_val <= account[msg.sender], "withdraw amount is greater than balance amount");
+        account[msg.sender] -= _val;
     }
 
-    function division (uint _num, uint _denom) public pure returns (uint){
-        if(_num < _denom){
-           
-            revert("numerator should be greater than denominator");
-            
+    // Function to check the balance
+    function checkBalance() public view returns (uint) {
+        if(account[msg.sender] <= 0){
+             revert("balance is less than or equal to zero");
         }
-        uint z=_num/_denom;
-        return z;
-       
-
+        assert(account[msg.sender] >= 0); 
+        return account[msg.sender];
     }
 }
